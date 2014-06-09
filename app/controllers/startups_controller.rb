@@ -10,6 +10,10 @@ class StartupsController < ApplicationController
 		Startup.all
 	end
 
+	def index
+		@startups = Startup.all
+	end
+
 	private
 
 	def set_startup
