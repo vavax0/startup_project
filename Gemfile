@@ -24,6 +24,7 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 
 gem 'haml'
 gem 'bootstrap-sass'
+gem 'thin'
 
 group :development, :test do
 	gem 'rspec-rails'
