@@ -25,16 +25,25 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'haml'
 gem 'bootstrap-sass'
 gem 'thin'
+gem 'grabzit'
+gem 'imgkit'
+gem 'wkhtmltopdf'
+gem 'paperclip', :git => "git://github.com/thoughtbot/paperclip.git"
+
+gem 'aws-sdk'
+
+gem 'pg'
+
+gem 'rails_12factor'
+
 
 group :development, :test do
 	gem 'rspec-rails'
-	gem 'sqlite3'
 	gem 'capybara'
 	gem 'factory_girl_rails'
 end
 
 group :production do
-	'pg'
 end
 
 
