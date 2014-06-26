@@ -11,7 +11,7 @@ RSpec.describe StartupsController, :type => :controller do
 		end
 
 		it 'exposes posts' do
-			expect(controller.startups).to include startup
+			expect(controller.index).to include startup
 		end 
 
 		it 'should expose specific post' do
@@ -23,6 +23,23 @@ RSpec.describe StartupsController, :type => :controller do
 			expect(assigns(:startup).regions).to eq region
 		end
 
+	end
+
+	describe "POST create" do
+
+		let(:valid_attributes) { { :name => "lol", :description => "lol", :short_description => "lol", :website_url => "lol" } }
+		
+		it 'creates a new Startup' do
+			expect {
+				post :create, { :startup => valid_attributes } 
+			}.to change(Startup, :count).by(1)
+		end
+
+
+		it 'should redirect to created startup' do
+			post :create, { :startup => valid_attributes } 
+			expect(response).to redirect_to Startup.last
+		end
 	end
 
 end

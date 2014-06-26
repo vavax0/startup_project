@@ -6,8 +6,23 @@ class StartupsController < ApplicationController
 		@startup = Startup.all.find(params[:id])
 	end
 
-	def startups
-		Startup.all
+	def new
+		@startup = Startup.new
+	end
+
+	def create
+
+		kit = IMGKit.new("http://google.pl", :quality => 90)
+		lol = kit.to_file("#{Rails.root}/img1_#.jpg")
+
+		@startup = Startup.new(startup_params)
+
+		if @startup.save
+			create_website_thumbnail(@startup)
+			redirect_to @startup
+		else
+			render action: :new
+		end
 	end
 
 	def index
@@ -18,6 +33,21 @@ class StartupsController < ApplicationController
 
 	def set_startup
 		@startup = Startup.all.find(params[:id])
+	end
+
+	def startup_params
+		params.require(:startup).permit(:name, :description, :short_description, :website_url)
+	end
+
+	def create_website_thumbnail(startup)
+		kit = IMGKit.new(startup.website_url, :quality => 90)
+		img = kit.to_img(:jpg)
+		file = Tempfile.new(["thumbnail_#{startup.name}_#{startup.id}", 'jpg'], 'tmp', :encoding => 'ascii-8bit')
+		file.write(img)
+		file.flush
+		startup.website_thumbnail = file
+		startup.save
+		file.unlink
 	end
 
 end
